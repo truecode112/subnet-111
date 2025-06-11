@@ -13,7 +13,7 @@ const localhostOnly = (request, response, next) => {
   const isLocalhost = ip === '127.0.0.1' || ip === '::1' || ip === '::ffff:127.0.0.1' || ip.includes('localhost');
 
   if (!isLocalhost) {
-    logger.warn(`[Miner] Blocked request from unauthorized IP: ${ip}`);
+    logger.warning(`[Miner] Blocked request from unauthorized IP: ${ip}`);
     return responseService.blockedRequest(response, { error: 'Access denied. Only localhost requests are allowed.' });
   }
 
