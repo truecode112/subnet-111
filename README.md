@@ -1,213 +1,483 @@
-<div align="center">
+# oneoneone - Subnet 111
 
-# **Bittensor Subnet Template** <!-- omit in toc -->
-[![Discord Chat](https://img.shields.io/discord/308323056592486420.svg)](https://discord.gg/bittensor)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+**A Decentralized Protocol for Accessing User-Generated Content**
 
----
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.12-blue.svg)
+![Node.js](https://img.shields.io/badge/node.js-18+-green.svg)
+![Bittensor](https://img.shields.io/badge/bittensor-subnet%20111-orange.svg)
 
-## The Incentivized Internet <!-- omit in toc -->
+## Table of Contents
 
-[Discord](https://discord.gg/bittensor) • [Network](https://taostats.io/) • [Research](https://bittensor.com/whitepaper)
-</div>
-
----
-- [Quickstarter template](#quickstarter-template)
-- [Introduction](#introduction)
-  - [Example](#example)
-- [Installation](#installation)
-  - [Before you proceed](#before-you-proceed)
-  - [Install](#install)
-- [Writing your own incentive mechanism](#writing-your-own-incentive-mechanism)
-- [Writing your own subnet API](#writing-your-own-subnet-api)
-- [Subnet Links](#subnet-links)
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [System Requirements](#system-requirements)
+- [Getting Started](#getting-started)
+- [API & Monetization](#api--monetization)
+- [Validation System](#validation-system)
+- [Scoring Mechanism](#scoring-mechanism)
+- [Roadmap](#roadmap)
+- [Development](#development)
+- [Contributing](#contributing)
 - [License](#license)
 
----
-## Quickstarter template
+## Overview
 
-This template contains all the required installation instructions, scripts, and files and functions for:
-- Building Bittensor subnets.
-- Creating custom incentive mechanisms and running these mechanisms on the subnets. 
+The **oneoneone** Subnet is a decentralized AI ecosystem built on the Bittensor network that specializes in collecting, validating, and serving high-quality user-generated content from platforms across the web. Our protocol enables developers, researchers, and companies to access authentic, real-time user reviews and content at scale, enhanced by AI-powered analysis and understanding.
 
-In order to simplify the building of subnets, this template abstracts away the complexity of the underlying blockchain and other boilerplate code. While the default behavior of the template is sufficient for a simple subnet, you should customize the template in order to meet your specific requirements.
----
+### Key Features
 
-## Introduction
+- **Decentralized Data Collection**: Network of miners scraping user-generated content from Google Maps, Yelp, and other platforms
+- **AI-Enhanced Analysis**:
+  - Authenticity detection for identifying spam and bot-generated content
+  - Intent classification (complaints, praise, questions)
+  - Emotion and sentiment analysis
+  - Multi-language translation support
+- **Real-time Validation**: Synthetic validation rounds every 30 minutes ensuring data quality and authenticity
+- **API Monetization**: Revenue-generating API through [oneoneone.io](https://oneoneone.io) with subscription-based access
+- **Profit Sharing**: Profits distributed back to network participants through buyback mechanism
+- **Quality Assurance**: Advanced scoring system combining speed (30%), volume (50%), and recency (20%) with spot check validation
 
-**IMPORTANT**: If you are new to Bittensor subnets, read this section before proceeding to [Installation](#installation) section. 
+### What is User-Generated Content?
 
-The Bittensor blockchain hosts multiple self-contained incentive mechanisms called **subnets**. Subnets are playing fields in which:
-- Subnet miners who produce value, and
-- Subnet validators who produce consensus
+Our network focuses on collecting and analyzing authentic user-generated content including:
+- Reviews on Google Maps, Yelp, retail websites
+- Forum discussions and comments
+- Social media posts and interactions
+- Blog entries and user feedback
+- Any authentic digital expression by real users
 
-determine together the proper distribution of TAO for the purpose of incentivizing the creation of value, i.e., generating digital commodities, such as intelligence or data. 
+Each piece of content is enriched with AI-powered insights, providing deeper understanding of user sentiment, intent, and authenticity.
 
-Each subnet consists of:
-- Subnet miners and subnet validators.
-- A protocol using which the subnet miners and subnet validators interact with one another. This protocol is part of the incentive mechanism.
-- The Bittensor API using which the subnet miners and subnet validators interact with Bittensor's onchain consensus engine [Yuma Consensus](https://bittensor.com/documentation/validating/yuma-consensus). The Yuma Consensus is designed to drive these actors: subnet validators and subnet miners, into agreement on who is creating value and what that value is worth. 
+## Architecture
 
-This starter template is split into three primary files. To write your own incentive mechanism, you should edit these files. These files are:
-1. `template/protocol.py`: Contains the definition of the protocol used by subnet miners and subnet validators.
-2. `neurons/miner.py`: Script that defines the subnet miner's behavior, i.e., how the subnet miner responds to requests from subnet validators.
-3. `neurons/validator.py`: This script defines the subnet validator's behavior, i.e., how the subnet validator requests information from the subnet miners and determines the scores.
+### Network Participants
 
-### Example
+- **Miners**: Collect, clean, and format data from various sources using our Node.js stack
+- **Validators**: Assess data quality through synthetic challenges and organic requests
+- **API Consumers**: Access structured content through our oneoneone.io platform
 
-The Bittensor Subnet 1 for Text Prompting is built using this template. See [prompting](https://github.com/macrocosm-os/prompting) for how to configure the files and how to add monitoring and telemetry and support multiple miner types. Also see this Subnet 1 in action on [Taostats](https://taostats.io/subnets/netuid-1/) explorer.
+### How It Works
 
----
+1. **Challenge Generation**: Validators issue scraping challenges (synthetic or organic)
+2. **Data Collection**: Miners respond with structured, validated data within time constraints
+3. **Quality Assessment**: Advanced validation checking for authenticity, completeness, and speed
+4. **API Distribution**: End users access content through our monetized API platform
+5. **Profit Sharing**: Network earnings distributed to participants.
 
-## Installation
+## System Requirements
 
-### Before you proceed
-Before you proceed with the installation of the subnet, note the following: 
+### Validators
 
-- Use these instructions to run your subnet locally for your development and testing, or on Bittensor testnet or on Bittensor mainnet. 
-- **IMPORTANT**: We **strongly recommend** that you first run your subnet locally and complete your development and testing before running the subnet on Bittensor testnet. Furthermore, make sure that you next run your subnet on Bittensor testnet before running it on the Bittensor mainnet.
-- You can run your subnet either as a subnet owner, or as a subnet validator or as a subnet miner. 
-- **IMPORTANT:** Make sure you are aware of the minimum compute requirements for your subnet. See the [Minimum compute YAML configuration](./min_compute.yml).
-- Note that installation instructions differ based on your situation: For example, installing for local development and testing will require a few additional steps compared to installing for testnet. Similarly, installation instructions differ for a subnet owner vs a validator or a miner. 
+**Minimum Requirements:**
+- **CPU**: 2 cores
+- **RAM**: 8 GB
+- **Storage**: 32 GB SSD
+- **Network**: Stable internet connection
+- **Stake**: Minimum stake requirement for permit validation
+- **API Access**: Valid APIFY_TOKEN for data scraping
 
-### Install
+### Miners
 
-- **Running locally**: Follow the step-by-step instructions described in this section: [Running Subnet Locally](./docs/running_on_staging.md).
-- **Running on Bittensor testnet**: Follow the step-by-step instructions described in this section: [Running on the Test Network](./docs/running_on_testnet.md).
-- **Running on Bittensor mainnet**: Follow the step-by-step instructions described in this section: [Running on the Main Network](./docs/running_on_mainnet.md).
+**Minimum Requirements:**
+- **CPU**: 2 cores
+- **RAM**: 8 GB
+- **Storage**: 32 GB SSD
+- **Network**: Stable internet connection with good latency
+- **API Access**: Valid APIFY_TOKEN for data scraping
 
----
+### Required Software
 
-## Writing your own incentive mechanism
+- **Python**: 3.12+
+- **Node.js**: 18+ (for the node stack)
+- **npm**: Latest version
+- **Conda**: For environment management
 
-As described in [Quickstarter template](#quickstarter-template) section above, when you are ready to write your own incentive mechanism, update this template repository by editing the following files. The code in these files contains detailed documentation on how to update the template. Read the documentation in each of the files to understand how to update the template. There are multiple **TODO**s in each of the files identifying sections you should update. These files are:
-- `template/protocol.py`: Contains the definition of the wire-protocol used by miners and validators.
-- `neurons/miner.py`: Script that defines the miner's behavior, i.e., how the miner responds to requests from validators.
-- `neurons/validator.py`: This script defines the validator's behavior, i.e., how the validator requests information from the miners and determines the scores.
-- `template/forward.py`: Contains the definition of the validator's forward pass.
-- `template/reward.py`: Contains the definition of how validators reward miner responses.
+## Getting Started
 
-In addition to the above files, you should also update the following files:
-- `README.md`: This file contains the documentation for your project. Update this file to reflect your project's documentation.
-- `CONTRIBUTING.md`: This file contains the instructions for contributing to your project. Update this file to reflect your project's contribution guidelines.
-- `template/__init__.py`: This file contains the version of your project.
-- `setup.py`: This file contains the metadata about your project. Update this file to reflect your project's metadata.
-- `docs/`: This directory contains the documentation for your project. Update this directory to reflect your project's documentation.
+### Prerequisites
 
-__Note__
-The `template` directory should also be renamed to your project name.
----
+Ensure you have the following installed on your system:
+- Conda or Miniconda
+- Node.js and npm
+- Git
 
-# Writing your own subnet API
-To leverage the abstract `SubnetsAPI` in Bittensor, you can implement a standardized interface. This interface is used to interact with the Bittensor network and can be used by a client to interact with the subnet through its exposed axons.
+### Installing PM2
 
-What does Bittensor communication entail? Typically two processes, (1) preparing data for transit (creating and filling `synapse`s) and (2), processing the responses received from the `axon`(s).
+PM2 is required for running the subnet services. Here's how to install it:
 
-This protocol uses a handler registry system to associate bespoke interfaces for subnets by implementing two simple abstract functions:
-- `prepare_synapse`
-- `process_responses`
+```bash
+# Install NVM (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 
-These can be implemented as extensions of the generic `SubnetsAPI` interface.  E.g.:
+# Reload bash configuration
+source ~/.bashrc
+# Note: If the 'source' command doesn't work, disconnect and reconnect to your server
 
+# Install Node.js v21 and PM2. You might want to refresh your terminal shell
+nvm i 21 && npm i pm2 -g
 
-This is abstract, generic, and takes(`*args`, `**kwargs`) for flexibility. See the extremely simple base class:
-```python
-class SubnetsAPI(ABC):
-    def __init__(self, wallet: "bt.wallet"):
-        self.wallet = wallet
-        self.dendrite = bt.dendrite(wallet=wallet)
-
-    async def __call__(self, *args, **kwargs):
-        return await self.query_api(*args, **kwargs)
-
-    @abstractmethod
-    def prepare_synapse(self, *args, **kwargs) -> Any:
-        """
-        Prepare the synapse-specific payload.
-        """
-        ...
-
-    @abstractmethod
-    def process_responses(self, responses: List[Union["bt.Synapse", Any]]) -> Any:
-        """
-        Process the responses from the network.
-        """
-        ...
-
+# Verify installations
+node --version  # Should show v21.x.x
+pm2 --version   # Should show PM2 version
 ```
 
+### 1. Clone and Setup Environment
 
-Here is a toy example:
+```bash
+# Clone the repository
+git clone https://github.com/oneoneone-io/subnet-111.git
+cd subnet-111
 
-```python
-from bittensor.subnets import SubnetsAPI
-from MySubnet import MySynapse
+# Install Miniconda
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b
+~/miniconda3/bin/conda init
+source ~/.bashrc
+# Note: If the 'source' command doesn't work, disconnect and reconnect to your server
 
-class MySynapseAPI(SubnetsAPI):
-    def __init__(self, wallet: "bt.wallet"):
-        super().__init__(wallet)
-        self.netuid = 99
+# Create and activate conda environment
+conda create -n subnet-111 python=3.12
+conda activate subnet-111
 
-    def prepare_synapse(self, prompt: str) -> MySynapse:
-        # Do any preparatory work to fill the synapse
-        data = do_prompt_injection(prompt)
+# Install Python dependencies
+pip install -r requirements.txt
+pip install -e .
 
-        # Fill the synapse for transit
-        synapse = StoreUser(
-            messages=[data],
-        )
-        # Send it along
-        return synapse
-
-    def process_responses(self, responses: List[Union["bt.Synapse", Any]]) -> str:
-        # Look through the responses for information required by your application
-        for response in responses:
-            if response.dendrite.status_code != 200:
-                continue
-            # potentially apply post processing
-            result_data = postprocess_data_from_response(response)
-        # return data to the client
-        return result_data
+# Install Node.js dependencies
+cd node
+npm install
+cd ..
 ```
 
-You can use a subnet API to the registry by doing the following:
-1. Download and install the specific repo you want
-1. Import the appropriate API handler from bespoke subnets
-1. Make the query given the subnet specific API
+### 2. Configuration
 
+Create your environment configuration:
 
+```bash
+# Copy the root environment file (no editing needed)
+cp .env.example .env
 
-# Subnet Links
-In order to see real-world examples of subnets in-action, see the `subnet_links.py` document or access them from inside the `template` package by:
-```python
-import template
-template.SUBNET_LINKS
-[{'name': 'sn0', 'url': ''},
- {'name': 'sn1', 'url': 'https://github.com/opentensor/prompting/'},
- {'name': 'sn2', 'url': 'https://github.com/bittranslateio/bittranslate/'},
- {'name': 'sn3', 'url': 'https://github.com/gitphantomman/scraping_subnet/'},
- {'name': 'sn4', 'url': 'https://github.com/manifold-inc/targon/'},
-...
-]
+# Copy the node environment file based on your role
+# For validators:
+cp node/.env.validator.example node/.env
+
+# For miners:
+cp node/.env.miner.example node/.env
+
+# Edit the node .env file to add your APIFY_TOKEN and PLATFORM_TOKEN (only for validators)
+nano node/.env
 ```
+
+**Required Configuration:**
+- Root `.env`: Contains general project settings. No editing required
+- Node `.env`: Contains Node.js application settings. Requires `APIFY_TOKEN` and `PLATFORM_TOKEN` (only for validators)
+
+#### APIFY Token Setup
+
+1. Sign up at [Apify.com](https://apify.com)
+2. Subscribe to the Starter plan
+3. Navigate to Settings → API & Integrations
+4. Create a new token with appropriate permissions
+5. Add the token to your `node/.env` file:
+   ```bash
+   APIFY_TOKEN=your_apify_token_here
+   ```
+
+#### Platform Token Setup
+If you are a validator, please contact the subnet team and get your `PLATFORM_TOKEN`. This token will be used in the future features including the platform integration.
+
+### 3. Register to Subnet
+
+Before running miners or validators, you need to register your wallet to the subnet:
+
+```bash
+# Install btcli
+pip install bittensor-cli
+
+# Register to subnet 111 (replace with your wallet details)
+btcli subnet register --no_prompt --wallet.name "miner" --wallet.hotkey "default" --netuid "111"
+```
+
+**Important Notes:**
+- Replace `miner` with your actual wallet name
+- Replace `default` with your actual hotkey name
+- Registration requires TAO for subnet fees
+- Each miner/validator needs a separate hotkey registration
+
+### 4. Running the Network
+
+You can run the network in two ways: automatically using the auto-updater (recommended) or manually. The auto-updater handles updates and restarts automatically, while manual setup gives you more control.
+
+#### Option A: Automatic Setup (Recommended)
+
+The auto-updater script checks for updates every 20 minutes and only restarts processes when actual code changes are detected:
+
+```bash
+# Make the auto-updater script executable
+chmod +x auto-updater.sh
+
+# Start validator with auto-updater (recommended)
+pm2 start ./auto-updater.sh --name "autoupdater-validator-prod" -- validator 111 validator default 9000
+
+# Start miner with auto-updater (recommended)
+pm2 start ./auto-updater.sh --name "autoupdater-miner-prod" -- miner 111 miner default 9001
+
+# View auto-updater logs
+pm2 logs autoupdater-validator-prod
+pm2 logs autoupdater-miner-prod
+```
+
+**Benefits of using the auto-updater:**
+- ✅ Automatically pulls latest code changes from GitHub
+- ✅ Only restarts processes when updates are detected
+- ✅ Handles dependency updates (Python and Node.js)
+- ✅ Prevents downtime from breaking changes
+- ✅ Comprehensive logging for debugging
+
+**Auto-updater parameters:**
+```bash
+./auto-updater.sh [validator|miner] [netuid] [wallet_name] [wallet_hotkey] [axon_port] [subtensor_network] [subtensor_chain_endpoint]
+```
+
+#### Option B: Manual Setup
+
+If you prefer manual control over the processes:
+
+##### For Miners
+
+```bash
+# Start the Node.js stack with PM2
+pm2 start npm --name node-miner --cwd ./node -- run miner:start
+
+# Start the Python miner with PM2
+pm2 start "python neurons/miner.py --netuid 111 --wallet.name <your_wallet_name> --wallet.hotkey <your_hotkey_name> --logging.debug --axon.port 9001" --name miner
+```
+
+##### For Validators
+
+```bash
+# Start the Node.js stack with PM2
+pm2 start npm --name node-validator --cwd ./node -- run validator:start
+
+# Start the Python validator with PM2
+pm2 start "python neurons/validator.py --netuid 111 --wallet.name <your_wallet_name> --wallet.hotkey <your_hotkey_name> --logging.debug --axon.port 9000" --name validator
+```
+
+#### Managing PM2 Processes
+
+```bash
+# View all running processes
+pm2 list
+
+# View logs
+pm2 logs miner
+pm2 logs validator
+pm2 logs node-miner
+pm2 logs node-validator
+
+# Stop processes
+pm2 stop miner validator node-miner node-validator
+
+# Restart processes
+pm2 restart miner validator node-miner node-validator
+
+# Save PM2 configuration
+pm2 save
+
+# Setup PM2 to start on system boot
+pm2 startup
+```
+
+## API & Monetization
+
+### oneoneone.io Platform
+
+Access our API through [oneoneone.io](https://oneoneone.io) with the following features:
+
+- **Subscription-based API keys** with credit billing
+- **Real-time queries** with advanced filtering (source, keyword, language, sorting)
+- **Developer tools and SDKs** for easy integration
+- **AI tool integration** with OpenAI, LangChain, Flowise, n8n
+- **MCP (Model Context Protocol) support**
+
+### Revenue Distribution
+
+Our transparent profit-sharing model:
+- **20%**: Development team allocation (salaries, operational costs)
+- **40%**: Buyback program (increases subnet value and emissions)
+- **40%**: Direct distribution to network participants
+
+```
+Profit = Total Earnings - Infrastructure Costs
+```
+
+All earnings, costs, and profit distributions are made transparent to the community.
+
+## Validation System
+
+### Synthetic Validation (Every 20 Minutes)
+
+Our automated quality assurance system:
+
+1. **Challenge Generation**: Validator selects job type (e.g., Google Maps reviews, Yelp reviews)
+2. **Data Collection**: Validator creates synthetic task for miners to execute
+3. **Miner Selection**: Up to 50 miners randomly chosen for the challenge
+4. **Response Window**: Miners have 120 seconds to complete the task
+5. **Validation Process**: Comprehensive checks including spot check verification against live data
+
+### Supported Platforms
+
+**Google Maps Reviews**
+- Location-based review scraping
+- Comprehensive field validation
+- Spot check verification against live data
+
+### Validation Criteria
+
+For each response, we validate:
+- **Speed Check**: Response within timeout limit (120 seconds)
+- **Structural Validation**: Proper data formatting and field completeness
+- **Spot Check Verification**: Random sample verification against live platform data
+- **Volume Validation**: Ensures meaningful data collection
+- **Field Integrity**: Comprehensive validation of all required fields
+
+## Scoring Mechanism
+
+Our three-component scoring system ensures quality, efficiency, and freshness of data:
+
+### Score Calculation
+
+```python
+def calculate_score(miner_responses, response_times, synapse_timeout):
+    # Volume Score (50%) - Number of reviews returned
+    volume_score = miner_review_count / max_review_count_across_miners
+
+    # Speed Score (30%) - Processing efficiency
+    speed_score = fastest_response_time / miner_response_time
+
+    # Recency Score (20%) - Freshness of most recent review
+    recency_score = (miner_most_recent_date - oldest_most_recent_date) / date_range
+
+    # Final composite score
+    final_score = (0.5 * volume_score) + (0.3 * speed_score) + (0.2 * recency_score)
+
+    return final_score
+```
+
+### Scoring Components
+
+**Volume Score (50%)**
+- Rewards miners who return more reviews
+- Normalized against the maximum review count across all miners
+- Encourages comprehensive data collection
+
+**Speed Score (30%)**
+- Rewards faster response times
+- Calculated as `fastest_time / miner_time`
+- Promotes efficient data processing
+
+**Recency Score (20%)**
+- Rewards miners whose most recent review is newer
+- Based on the freshness of the latest review returned
+- Encourages up-to-date data collection
+
+### Scoring Formula
+
+$$
+\begin{aligned}
+\text{Let:} \quad &T_{\min} = \min(T_i) \text{ (fastest response time)} \\
+                  &V_{\max} = \max(V_i) \text{ (highest review count)} \\
+                  &D_{\max} = \max(D_i) \text{ (most recent date overall)} \\
+                  &D_{\min} = \min(D_i) \text{ (oldest recent date)} \\
+\\
+\text{For each miner } i: \\
+&\text{Volume score:} \quad V_s = \frac{V_i}{V_{\max}} \\
+&\text{Speed score:} \quad T_s = \frac{T_{\min}}{T_i} \\
+&\text{Recency score:} \quad R_s = \frac{D_i - D_{\min}}{D_{\max} - D_{\min}} \\
+&\text{Final score:} \quad S_i = 0.5 \cdot V_s + 0.3 \cdot T_s + 0.2 \cdot R_s
+\end{aligned}
+$$
+
+**Disqualification Conditions:**
+- Failed validation checks (structural validation, spot check verification)
+- Response time ≥ synapse timeout (120 seconds)
+- Invalid or malformed data
+- Spot check failures (random sample verification against live data)
+
+### Validation Process
+
+**Spot Check System:**
+- Randomly selects 3 reviews from each miner's response
+- Verifies against live Google Maps data
+- Checks for exact matches of key data fields
+- Ensures data authenticity and prevents fabricated responses
+
+## Roadmap
+
+| Phase | Milestone | Status |
+|-------|-----------|---------|
+| **Phase 1** (Kickoff) | Implementation of 3 core job types<br/>95%+ API success rate<br/>Network benchmarking | 🚧 In Progress |
+| **Phase 2** (AI Enhancement) | LLM-powered authenticity detection<br/>Intent and sentiment analysis<br/>Translation support | 📋 Planned |
+| **Phase 3** (Platform Launch) | oneoneone.io dashboard<br/>Early adopter onboarding<br/>Performance optimizations | 📋 Planned |
+| **Phase 4** (Technical Expansion) | 10+ job types<br/>First paying customers<br/>Buyback system implementation | 📋 Planned |
+| **Phase 5** (User Growth) | Customer base expansion<br/>15+ job types<br/>Enhanced platform features | 📋 Planned |
+
+## Development
+
+### Testing
+
+```bash
+# Run Python tests
+pytest tests/ -v
+
+# Run Node.js tests
+cd node && npm test
+
+# Run integration tests
+cd node && npm run test:integration
+```
+
+## Contributing
+
+We welcome contributions to the oneoneone subnet! Please read our contributing guidelines and submit pull requests for any improvements.
+
+### Guidelines
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes with appropriate tests
+4. Submit a pull request with detailed description
 
 ## License
-This repository is licensed under the MIT License.
-```text
-# The MIT License (MIT)
-# Copyright © 2024 Opentensor Foundation
 
-# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-# documentation files (the “Software”), to deal in the Software without restriction, including without limitation
-# the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
-# and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-# The above copyright notice and this permission notice shall be included in all copies or substantial portions of
-# the Software.
-
-# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-# THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-# DEALINGS IN THE SOFTWARE.
 ```
+The MIT License (MIT)
+Copyright © 2024 oneoneone Subnet
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
+
+---
+
+**Built with ❤️ for the Bittensor ecosystem**
+
+For support, documentation, and updates, visit [oneoneone.io](https://oneoneone.io)

@@ -16,24 +16,19 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-from setuptools import setup, find_packages
+"""
+Shared configuration settings for oneoneone subnet components
+"""
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+# Timeout configurations (in seconds)
+VALIDATOR_API_TIMEOUT = 180  # Timeout for calls to validator Node.js API (allows for retries and processing)
+SYNAPSE_TIMEOUT = 120  # Timeout for synapse queries between validators and miners
 
-with open("requirements.txt", "r") as f:
-    requirements = f.read().splitlines()
+# Miner selection configuration
+MAX_MINER_COUNT = 50  # Maximum number of miners to query in each validation round
 
-setup(
-    name="oneoneone",
-    version="0.0.1",
-    description="Bittensor Subnet 111 - Google Maps Reviews",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    author="oneoneone",
-    packages=find_packages(),
-    include_package_data=True,
-    python_requires=">=3.8",
-    install_requires=requirements,
-    license="MIT",
-)
+# Timing configurations
+SYNAPSE_WAIT_TIME = 60 * 20  # Time to wait between validator forward passes (seconds)
+
+# Validator minimum stake
+VALIDATOR_MIN_STAKE = 1.024e3

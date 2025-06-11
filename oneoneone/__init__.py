@@ -16,24 +16,16 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-from setuptools import setup, find_packages
-
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
-
-with open("requirements.txt", "r") as f:
-    requirements = f.read().splitlines()
-
-setup(
-    name="oneoneone",
-    version="0.0.1",
-    description="Bittensor Subnet 111 - Google Maps Reviews",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    author="oneoneone",
-    packages=find_packages(),
-    include_package_data=True,
-    python_requires=">=3.8",
-    install_requires=requirements,
-    license="MIT",
+# Define the version of the oneoneone module.
+__version__ = "0.0.1"
+version_split = __version__.split(".")
+__spec_version__ = (
+    (1000 * int(version_split[0]))
+    + (10 * int(version_split[1]))
+    + (1 * int(version_split[2]))
 )
+
+# Import all submodules.
+from . import protocol
+from . import base
+from . import validator
