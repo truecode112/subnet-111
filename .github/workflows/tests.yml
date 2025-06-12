@@ -1,12 +1,8 @@
-name: Tests, Coverage and Linting
+name: Tests Coverage and Linting
 
 on:
   push:
-    paths:
-      - 'node/**'
   pull_request:
-    paths:
-      - 'node/**'
 
 jobs:
   test:
