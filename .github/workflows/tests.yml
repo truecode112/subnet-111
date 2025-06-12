@@ -1,7 +1,6 @@
 name: Tests Coverage and Linting
 
 on:
-  push:
   pull_request:
 
 jobs:
