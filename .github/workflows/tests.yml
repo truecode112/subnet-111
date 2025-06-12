@@ -1,0 +1,49 @@
+name: Tests, Coverage and Linting
+
+on:
+  push:
+    paths:
+      - 'node/**'
+  pull_request:
+    paths:
+      - 'node/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./node
+        
+    strategy:
+      matrix:
+        node-version: [21.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: './node/package-lock.json'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run linting
+        run: npm run lint
+        
+      - name: Run tests with coverage
+        run: npm test
+        
+      - name: Check coverage thresholds
+        run: |
+          if grep -q "All files.*100.*100.*100.*100" ./coverage/lcov-report/index.html; then
+            echo "✅ Coverage is 100%"
+          else
+            echo "❌ Coverage is not 100%"
+            exit 1
+          fi 
