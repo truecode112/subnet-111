@@ -10,7 +10,6 @@ jest.mock('#modules/logger/index.js', () => ({
 
 jest.mock('#utils/validator/send-for-digestion.js', () => jest.fn());
 
-
 describe('#utils/validator/google-maps/score/prepare-and-send-for-digestion.js', () => {
   let responses;
   let minerUIDs;
