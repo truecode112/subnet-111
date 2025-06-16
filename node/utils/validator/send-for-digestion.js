@@ -15,8 +15,9 @@ const sendForDigestion = async (type, minerUID, data) => {
         return;
     }
 
+    let response;
     try {
-        await fetch(DIGESTION_API_URL, {
+        response = await fetch(DIGESTION_API_URL, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +31,9 @@ const sendForDigestion = async (type, minerUID, data) => {
         })
     } catch (error) {
         logger.error(`Error sending for digestion: ${error}`);
-    }   
+    }
+    
+    return response;
 }
 
 export default sendForDigestion

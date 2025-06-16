@@ -1,4 +1,5 @@
 import sendForDigestion from '#utils/validator/send-for-digestion.js';
+import logger from '#modules/logger/index.js';
 import prepareAndSendForDigestion from './prepare-and-send-for-digestion.js';
 
 jest.mock('#modules/logger/index.js', () => ({
@@ -8,6 +9,7 @@ jest.mock('#modules/logger/index.js', () => ({
 }));
 
 jest.mock('#utils/validator/send-for-digestion.js', () => jest.fn());
+
 
 describe('#utils/validator/google-maps/score/prepare-and-send-for-digestion.js', () => {
   let responses;
@@ -52,11 +54,17 @@ describe('#utils/validator/google-maps/score/prepare-and-send-for-digestion.js',
     }]];
     minerUIDs = [0];
     fid = 'fid123';
-    sendForDigestion.mockResolvedValue(true);
+    sendForDigestion.mockResolvedValue({ok: true});
   });
 
   test('should send the data for digestion', async () => {
     await prepareAndSendForDigestion(responses, minerUIDs, fid);
     expect(sendForDigestion).toHaveBeenCalledWith('google-maps-reviews', 0, responses[0]);
+  });
+
+  test('should put an error if the data is not sent for digestion', async () => {
+    sendForDigestion.mockResolvedValue({ok: false});
+    await prepareAndSendForDigestion(responses, minerUIDs, fid);
+    expect(logger.error).toHaveBeenCalledWith('UID 0: Failed to send for digestion');
   });
 });

@@ -29,7 +29,13 @@ const prepareAndSendForDigestion = async (responses, minerUIDs, fid) => {
         const { valid: validReviews } = array.validateArray(uniqueReviews, requiredFields);
 
         // Send for digestion
-        await sendForDigestion('google-maps-reviews', minerUID, validReviews);
+        const apiResponse = await sendForDigestion('google-maps-reviews', minerUID, validReviews);
+
+        if(apiResponse.ok){
+            logger.info(`UID ${minerUID}: Sent for digestion successfully`);
+        } else {
+            logger.error(`UID ${minerUID}: Failed to send for digestion`);
+        }
     }
     
 }
