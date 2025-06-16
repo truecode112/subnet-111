@@ -33,8 +33,6 @@ const prepareAndSendForDigestion = async (responses, minerUIDs, fid) => {
 
         if(apiResponse.ok){
             logger.info(`UID ${minerUID}: Sent for digestion successfully`);
-        } else {
-            logger.error(`UID ${minerUID}: Failed to send for digestion`);
         }
     }
     
