@@ -43,7 +43,7 @@ class GoogleMapsReviewsSynapse(bt.Synapse):
 
     # Required request inputs (set by validator)
     fid: str
-    placeId: str
+    placeid: str
     language: str = "en"
     sort: str = "newest"
     timeout: int = 120
