@@ -91,6 +91,7 @@ async def forward(self):
     # Create synthetic task with a random Google Maps place
     task = await create_synthetic_task()
     fid = task["dataId"]  # This is the fid from the Node.js validator
+    placeId = task["id"]  # This is the placeId from the Node.js validator
 
     # Store the miner UIDs for scoring
     self.current_miner_uids = miner_uids
@@ -130,6 +131,7 @@ async def forward(self):
                 axons=[axon],
                 synapse=GoogleMapsReviewsSynapse(
                     fid=fid,
+                    placeId=placeId,
                     language=language,
                     sort=sort,
                     timeout=timeout,
