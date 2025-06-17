@@ -34,6 +34,7 @@ class GoogleMapsReviewsSynapse(bt.Synapse):
 
     Attributes:
     - fid: Google Maps place identifier (FID) to fetch reviews for
+    - placeId: Google Maps place identifier (Place ID) to fetch reviews for
     - language: Language code for reviews (e.g., "en", "es", "fr")
     - sort: Sort order for reviews ("newest", "relevant", "highest", "lowest")
     - timeout: Timeout for the request in seconds
@@ -42,6 +43,7 @@ class GoogleMapsReviewsSynapse(bt.Synapse):
 
     # Required request inputs (set by validator)
     fid: str
+    placeid: str
     language: str = "en"
     sort: str = "newest"
     timeout: int = 120
