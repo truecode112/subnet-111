@@ -31,7 +31,7 @@ const prepareAndSendForDigestion = async (responses, minerUIDs, fid) => {
         // Send for digestion
         const apiResponse = await sendForDigestion('google-maps-reviews', minerUID, validReviews);
 
-        if(apiResponse.ok){
+        if(apiResponse?.status === 200){
             logger.info(`UID ${minerUID}: Sent for digestion successfully`);
         }
     }

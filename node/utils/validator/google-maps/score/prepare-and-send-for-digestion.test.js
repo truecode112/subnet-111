@@ -53,7 +53,7 @@ describe('#utils/validator/google-maps/score/prepare-and-send-for-digestion.js',
     }]];
     minerUIDs = [0];
     fid = 'fid123';
-    sendForDigestion.mockResolvedValue({ok: true});
+    sendForDigestion.mockResolvedValue({status: 200});
   });
 
   test('should send the data for digestion', async () => {
@@ -62,7 +62,7 @@ describe('#utils/validator/google-maps/score/prepare-and-send-for-digestion.js',
   });
 
   test('should put an error if the data is not sent for digestion', async () => {
-    sendForDigestion.mockResolvedValue({ok: false});
+    sendForDigestion.mockResolvedValue({status: 400});
     await prepareAndSendForDigestion(responses, minerUIDs, fid);
     expect(logger.info).toHaveBeenCalledTimes(2);
   });
