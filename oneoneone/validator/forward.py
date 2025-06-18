@@ -90,8 +90,7 @@ async def forward(self):
 
     # Create synthetic task with a random Google Maps place
     task = await create_synthetic_task()
-    fid = task["dataId"]  # This is the fid from the Node.js validator
-    placeid = task["id"]  # This is the placeId from the Node.js validator
+    fid = task["dataId"]  # This is the fid from the Node.js validator    
 
     # Store the miner UIDs for scoring
     self.current_miner_uids = miner_uids
@@ -130,8 +129,7 @@ async def forward(self):
             response = await self.dendrite(
                 axons=[axon],
                 synapse=GoogleMapsReviewsSynapse(
-                    fid=fid,
-                    placeid=placeid,
+                    fid=fid,                    
                     language=language,
                     sort=sort,
                     timeout=timeout,
