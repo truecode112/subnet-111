@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "install": "^0.13.0",
+    "ioredis": "^5.6.1",
+    "npm": "^11.4.2",
+    "redis": "^5.5.6",
+    "redlock": "^5.0.0-beta.2"
+  }
+}

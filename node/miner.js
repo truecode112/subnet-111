@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import logger from '#modules/logger/index.js';
-import googleMapsReviewsRoute from '#routes/miner/google-maps/reviews.js';
+import googleMapsReviewsRoute from '#routes/miner/google-maps/reviews-redis.js';
 import localhostOnly from '#modules/middlewares/localhost-only.js';
 
 dotenv.config();
